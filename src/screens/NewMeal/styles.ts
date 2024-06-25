@@ -18,14 +18,6 @@ export const Container = styled.KeyboardAvoidingView.attrs({
   flex: 1;
 `;
 
-export const Scroll = styled.ScrollView.attrs({
-  showsVerticalScrollIndicator: false,
-  keyboardShouldPersistTaps: 'handled',
-})`
-  flex: 1;
-  margin-bottom: 20px;
-`;
-
 export const Form = styled.View`
   ${({ theme }) => css`
     flex: 1;

@@ -7,8 +7,10 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker';
 import * as Crypto from 'expo-crypto';
 
+import { useNavigation } from '@react-navigation/native';
 import { TNewMeal } from '@shared/interfaces/TNewMeal';
-import { Keyboard } from 'react-native';
+import * as Global from '@styles/globals';
+import { Alert, Keyboard } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { addNewMeal } from 'src/storage/Meals';
 import * as S from './styles';
@@ -17,8 +19,9 @@ type TModeDatePicker = 'date' | 'time';
 
 const NewMeal: React.FC = () => {
   const modalizeRef = useRef<Modalize>(null);
+  const { goBack } = useNavigation();
   const [withinDiet, setWithinDiet] = useState<undefined | boolean>(undefined);
-  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [, setShowDatePicker] = useState(false);
   const [mode, setMode] = useState<TModeDatePicker>('date');
   const [newMeal, setNewMeal] = useState<TNewMeal>({
     date: new Date(),
@@ -61,6 +64,9 @@ const NewMeal: React.FC = () => {
   }, []);
 
   const handleAddMeal = useCallback(() => {
+    if (!newMeal.name || !newMeal.description || withinDiet === undefined)
+      return Alert.alert('Erro', 'Preencha todos os campos');
+
     const id = Crypto.randomUUID();
     const newData = {
       ...newMeal,
@@ -68,13 +74,14 @@ const NewMeal: React.FC = () => {
     };
 
     addNewMeal(newData);
+    goBack();
   }, [newMeal]);
 
   return (
     <S.Container>
       <Header title='Nova refeição' />
       <S.Form>
-        <S.Scroll>
+        <Global.Scroll>
           <S.Label>Nome</S.Label>
           <S.Input
             autoFocus
@@ -131,7 +138,7 @@ const NewMeal: React.FC = () => {
               <S.ButtonText>Não</S.ButtonText>
             </S.Button>
           </S.Row>
-        </S.Scroll>
+        </Global.Scroll>
 
         <Button onPress={handleAddMeal} title='Cadastrar refeição'></Button>
       </S.Form>

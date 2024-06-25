@@ -1,9 +1,11 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import Button from '@components/Button';
 import MealInfo from '@components/MealInfo';
 import { useNavigation } from '@react-navigation/native';
 import { TNewMeal } from '@shared/interfaces/TNewMeal';
+import * as Global from '@styles/globals';
+import { format } from 'date-fns';
 import { useMMKVObject } from 'react-native-mmkv';
 import { mealKey } from 'src/configs/storage';
 import * as S from './styles';
@@ -12,7 +14,23 @@ const Home: React.FC = () => {
   const { navigate } = useNavigation();
 
   const [meals] = useMMKVObject<TNewMeal[]>(mealKey);
-  console.tron.log('meals: ', meals);
+
+  const mealsFormatted = useMemo(() => {
+    if (!meals) return [];
+    const groups = meals.reduce((acc, meal) => {
+      const dateKey = format(new Date(meal.date), 'dd.MM.yy');
+      if (!acc[dateKey]) {
+        acc[dateKey] = [];
+      }
+      acc[dateKey].push(meal);
+      return acc;
+    }, {} as Record<string, TNewMeal[]>);
+
+    return Object.keys(groups).map((date) => ({
+      date,
+      meals: groups[date],
+    }));
+  }, [meals]);
 
   const handleNavigateToResumeDiet = useCallback(() => {
     navigate('ResumeDiet', {
@@ -44,16 +62,23 @@ const Home: React.FC = () => {
         <Button hasIcon title='Nova refeição' onPress={handleAddMeal} />
       </S.ContainerAddMeal>
 
-      <S.Label isBold>12.08.22</S.Label>
-      {meals &&
-        meals.map((meal) => (
-          <MealInfo
-            key={meal.id}
-            hour={meal.hour}
-            food={meal.name}
-            withinDiet={meal.withinDiet}
-          />
-        ))}
+      <Global.Scroll>
+        {mealsFormatted &&
+          mealsFormatted.length > 0 &&
+          mealsFormatted.map((meal) => (
+            <>
+              <S.Label isBold>{meal.date}</S.Label>
+              {meal.meals.map((mealItem) => (
+                <MealInfo
+                  key={mealItem.id}
+                  hour={new Date(mealItem.date)}
+                  food={mealItem.name}
+                  withinDiet={mealItem.withinDiet}
+                />
+              ))}
+            </>
+          ))}
+      </Global.Scroll>
     </S.Container>
   );
 };

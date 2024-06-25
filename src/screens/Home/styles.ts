@@ -81,7 +81,7 @@ export const IconArrowUp = styled(ArrowUpRight).attrs(({ theme }) => ({
 }))``;
 
 export const ContainerAddMeal = styled.View`
-  margin-bottom: 32px;
+  margin-bottom: 16px;
 `;
 
 export const Label = styled.Text<TLabelProps>`
@@ -90,5 +90,6 @@ export const Label = styled.Text<TLabelProps>`
     font-family: ${isBold ? theme.fonts.bold : theme.fonts.regular};
     color: ${theme.colorsBase.gray100};
     margin-bottom: 8px;
+    margin-top: 16px;
   `}
 `;

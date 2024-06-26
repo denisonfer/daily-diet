@@ -1,6 +1,6 @@
 import theme from '@styles/theme';
 
-export default function getHeaderBcgColor(withinDiet: boolean | undefined): {
+export default function getBackgroundColor(withinDiet: boolean | undefined): {
   bcgColor: string;
   backIconColor: string;
 } {

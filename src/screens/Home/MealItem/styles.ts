@@ -1,10 +1,11 @@
+import { TouchableOpacity } from 'react-native';
 import styled, { css } from 'styled-components/native';
 
 type TWithinDietProps = {
   isWithinDiet: boolean;
 };
 
-export const Container = styled.View`
+export const Container = styled(TouchableOpacity)`
   ${({ theme }) => css`
     flex-direction: row;
     align-items: center;

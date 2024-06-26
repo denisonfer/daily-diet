@@ -18,17 +18,6 @@ export const Container = styled.KeyboardAvoidingView.attrs({
   flex: 1;
 `;
 
-export const Form = styled.View`
-  ${({ theme }) => css`
-    flex: 1;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    margin-top: -20px;
-    padding: 40px 24px;
-    background-color: ${theme.colorsBase.gray700};
-  `}
-`;
-
 export const Label = styled.Text`
   ${({ theme }) => css`
     font-size: ${theme.fontSizes.lg}px;

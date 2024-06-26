@@ -1,29 +1,38 @@
-import { Plus } from 'phosphor-react-native';
 import { TouchableOpacity } from 'react-native';
 import styled, { css } from 'styled-components/native';
 
-export const Container = styled(TouchableOpacity)`
-  ${({ theme }) => css`
+type TButtonProps = {
+  outlined?: boolean;
+};
+
+export const Container = styled(TouchableOpacity)<TButtonProps>`
+  ${({ theme, outlined }) => css`
     height: 50px;
+    width: 100%;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     background-color: ${theme.colorsBase.gray200};
     border-radius: 6px;
+
+    ${outlined &&
+    css`
+      background-color: ${theme.colorsBase.white};
+      border: 1px solid ${theme.colorsBase.gray200};
+    `}
   `}
 `;
 
-export const Icon = styled(Plus).attrs(({ theme }) => ({
-  size: 18,
-  color: theme.colorsBase.white,
-}))`
-  margin-right: 12px;
-`;
-
-export const Text = styled.Text`
-  ${({ theme }) => css`
+export const Text = styled.Text<TButtonProps>`
+  ${({ theme, outlined }) => css`
     font-size: ${theme.fontSizes.lg}px;
     font-family: ${theme.fonts.bold};
     color: ${theme.colorsBase.white};
+    margin-left: 12px;
+
+    ${outlined &&
+    css`
+      color: ${theme.colorsBase.gray200};
+    `}
   `}
 `;

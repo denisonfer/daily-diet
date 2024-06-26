@@ -1,4 +1,4 @@
-import getHeaderBcgColor from '@utils/getHeaderBcgColor';
+import getBackgroundColor from '@utils/getBackgroundColor';
 import { ArrowLeft } from 'phosphor-react-native';
 import styled, { css } from 'styled-components/native';
 
@@ -12,7 +12,7 @@ export const Container = styled.View<TContainerProps>`
     align-items: center;
     justify-content: space-between;
     height: 150px;
-    background-color: ${getHeaderBcgColor(withinDiet).bcgColor};
+    background-color: ${getBackgroundColor(withinDiet).bcgColor};
     padding-top: 20px;
   `}
 `;
@@ -27,7 +27,7 @@ export const Button = styled.TouchableOpacity`
 export const IconBack = styled(ArrowLeft).attrs<TContainerProps>(
   ({ withinDiet }) => ({
     size: 24,
-    color: getHeaderBcgColor(withinDiet).backIconColor,
+    color: getBackgroundColor(withinDiet).backIconColor,
   })
 )``;
 

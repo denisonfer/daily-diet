@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react';
 
+import { TouchableOpacityProps } from 'react-native';
 import * as S from './styles';
 
-type TProps = {
+type TProps = TouchableOpacityProps & {
   hour: Date;
   food: string;
   withinDiet: boolean;
 };
-const MealInfo: React.FC<TProps> = ({ hour, food, withinDiet }) => {
+const MealItem: React.FC<TProps> = ({ hour, food, withinDiet, ...rest }) => {
   const formatTime = useMemo(() => {
     const date = new Date(hour);
     const hours = date.getHours().toString().padStart(2, '0');
@@ -16,7 +17,7 @@ const MealInfo: React.FC<TProps> = ({ hour, food, withinDiet }) => {
   }, [hour]);
 
   return (
-    <S.Container>
+    <S.Container {...rest}>
       <S.Hour>{formatTime}</S.Hour>
       <S.VerticalDivider />
       <S.Food>{food}</S.Food>
@@ -25,4 +26,4 @@ const MealInfo: React.FC<TProps> = ({ hour, food, withinDiet }) => {
   );
 };
 
-export default MealInfo;
+export default MealItem;

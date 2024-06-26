@@ -8,6 +8,10 @@ type TLabelProps = {
   isBold?: boolean;
 };
 
+type TContainerProps = {
+  withinDiet?: boolean;
+};
+
 export const Container = styled(SafeAreaView)`
   ${({ theme }) => css`
     flex: 1;
@@ -35,9 +39,11 @@ export const Avatar = styled.View`
   border-width: 2px;
 `;
 
-export const ContainerInfo = styled.View`
-  ${({ theme }) => css`
-    background-color: ${theme.colorsProduct.greenLight};
+export const ContainerInfo = styled.View<TContainerProps>`
+  ${({ theme, withinDiet }) => css`
+    background-color: ${withinDiet
+      ? theme.colorsProduct.greenLight
+      : theme.colorsProduct.redLight};
     border-radius: 8px;
     padding: 24px;
     width: 100%;
@@ -46,22 +52,6 @@ export const ContainerInfo = styled.View`
     justify-content: center;
     position: relative;
     margin-bottom: 40px;
-  `}
-`;
-
-export const Title = styled.Text`
-  ${({ theme }) => css`
-    font-size: ${theme.fontSizes.xxl}px;
-    font-family: ${theme.fonts.bold};
-    color: ${theme.colorsBase.gray100};
-  `}
-`;
-
-export const Subtitle = styled.Text`
-  ${({ theme }) => css`
-    font-size: ${theme.fontSizes.sm}px;
-    font-family: ${theme.fonts.regular};
-    color: ${theme.colorsBase.gray200};
   `}
 `;
 
@@ -75,10 +65,14 @@ export const Button = styled(TouchableOpacity)`
   right: 8px;
 `;
 
-export const IconArrowUp = styled(ArrowUpRight).attrs(({ theme }) => ({
-  size: 24,
-  color: theme.colorsProduct.greenDark,
-}))``;
+export const IconArrowUp = styled(ArrowUpRight).attrs<TContainerProps>(
+  ({ theme, withinDiet }) => ({
+    size: 24,
+    color: withinDiet
+      ? theme.colorsProduct.greenDark
+      : theme.colorsProduct.redDark,
+  })
+)``;
 
 export const ContainerAddMeal = styled.View`
   margin-bottom: 16px;

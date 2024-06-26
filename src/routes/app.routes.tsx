@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '@screens/Home';
+import MealDetail from '@screens/MealDetail';
 import NewMeal from '@screens/NewMeal';
 import ResumeDiet from '@screens/ResumeDiet';
 import React from 'react';
@@ -12,6 +13,7 @@ const AppRoutes: React.FC = () => {
       <Screen name='Home' component={Home} />
       <Screen name='ResumeDiet' component={ResumeDiet} />
       <Screen name='NewMeal' component={NewMeal} />
+      <Screen name='MealDetail' component={MealDetail} />
     </Navigator>
   );
 };

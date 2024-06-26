@@ -67,7 +67,7 @@ const Home: React.FC = () => {
   );
 
   const handleAddMeal = useCallback(() => {
-    navigate('NewMeal');
+    navigate('NewMeal', { isEditing: false });
   }, []);
 
   return (
@@ -82,7 +82,10 @@ const Home: React.FC = () => {
           title={`${withinDietPercentage.toFixed(2)}%`}
           subtitle='das refeições dentro da dieta'
         />
-        <S.Button onPress={handleNavigateToResumeDiet}>
+        <S.Button
+          onPress={handleNavigateToResumeDiet}
+          disabled={!meals?.length}
+        >
           <S.IconArrowUp withinDiet={withinDietPercentage >= 50} />
         </S.Button>
       </S.ContainerInfo>

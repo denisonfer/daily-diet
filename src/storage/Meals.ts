@@ -12,8 +12,18 @@ export function getMeals(): TNewMeal[] {
   return meals ? JSON.parse(meals) : [];
 }
 
-export function removeMeal(index: number) {
+export function updateMeal(meal: TNewMeal) {
   const currentMeals = getMeals();
-  const updatedMeals = currentMeals.filter((_, i) => i !== index);
+
+  const updatedMeals = currentMeals.map((m) =>
+    m.id === meal.id ? { ...m, ...meal } : m
+  );
+
+  storage.set(mealKey, JSON.stringify(updatedMeals));
+}
+
+export function removeMeal(id: string) {
+  const currentMeals = getMeals();
+  const updatedMeals = currentMeals.filter((meal) => meal.id !== id);
   storage.set(mealKey, JSON.stringify(updatedMeals));
 }

@@ -1,17 +1,20 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import Button from '@components/Button';
 import Header from '@components/Header';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { TNewMeal } from '@shared/interfaces/TNewMeal';
+import { removeMeal } from '@storage/Meals';
 import * as Global from '@styles/globals';
 import { format } from 'date-fns';
+import { Alert } from 'react-native';
 import * as S from './styles';
 
 type TRouteParams = {
   meal: TNewMeal;
 };
 const MealDetail: React.FC = () => {
+  const { navigate, goBack } = useNavigation();
   const route = useRoute();
   const { meal } = route.params as TRouteParams;
 
@@ -22,6 +25,28 @@ const MealDetail: React.FC = () => {
     const hourFormatted = format(hour, 'HH:mm');
 
     return `${dateFormatted} às ${hourFormatted}`;
+  }, [meal]);
+
+  const handleNavigateToEdit = useCallback(() => {
+    navigate('NewMeal', { isEditing: true, meal });
+  }, [navigate, meal]);
+
+  const handleRemoveMeal = useCallback(() => {
+    Alert.alert(
+      'Remover refeição',
+      'Tem certeza que deseja remover essa refeição?',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Remover',
+          onPress: () => {
+            removeMeal(meal.id);
+            goBack();
+          },
+        },
+      ],
+      { cancelable: true }
+    );
   }, [meal]);
 
   return (
@@ -45,13 +70,13 @@ const MealDetail: React.FC = () => {
           <S.ButtonEdit
             title='Editar refeição'
             icon='PencilSimpleLine'
-            onPress={() => {}}
+            onPress={handleNavigateToEdit}
           />
           <Button
             title='Excluir refeição'
             icon='Trash'
             outlined
-            onPress={() => {}}
+            onPress={handleRemoveMeal}
           />
         </S.Footer>
       </Global.Content>

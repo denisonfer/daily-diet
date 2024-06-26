@@ -49,4 +49,4 @@ Daily Diet é uma aplicação mobile para controle da sua dieta. Nele você pode
 
 ![Preview do App](https://github.com/denisonfer/daily-diet/blob/main/assets/daily-diet-home.jpg)
 ![Preview do App](https://github.com/denisonfer/daily-diet/blob/main/assets/daily-diet-newMeal.jpg)
-![Preview do App](https://github.com/denisonfer/daily-diet/blob/main/assets/daily-diet-edit.jpg)
+![Preview do App](https://github.com/denisonfer/daily-diet/blob/main/assets/daily-meal-edit.jpg)
